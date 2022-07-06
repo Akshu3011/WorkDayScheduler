@@ -28,73 +28,161 @@ var currentTimeString =
   "";
 // print clock js in div #clock.
 console.log(currentTimeString);
-
+function init()
+{
+  
 //as per the current hour,the calender background will change
 if (currentHours > 12) {
   for (var i = 1; i < 6; i++) {
     let myhour = currentHours - 12;
-    if(myhour>5)
-    {
-        $(".textarea" + i).addClass("past");
-   
+    if (myhour > 5) {
+        $(".textarea" + i).removeClass("past present future");
+      $(".textarea" + i).addClass("past");
     }
     if (myhour === i) {
-      $(".textarea" + i).addClass("present");
-    } 
-    else if (myhour > i) {
-      $(".textarea" + i).addClass("past");
+        $(".textarea" + i).removeClass("past present future");
+
+        $(".textarea" + i).addClass("present");
+    } else if (myhour > i) {
+        $(".textarea" + i).removeClass("past present future");
+
+        $(".textarea" + i).addClass("past");
     } else {
-      $(".textarea" + i).addClass("future");
+        $(".textarea" + i).removeClass("past present future");
+
+        $(".textarea" + i).addClass("future");
     }
 
-    for(var j=9; j < 13; j++)
-    {
+    for (var j = 9; j < 13; j++) {
+      
         $(".textarea" + j).addClass("past");
     }
   }
-}
-else
-if (currentHours <= 12) {
-    for(var i=9; i < 13; i++)
-    {
+} else if (currentHours <= 12) {
+  for (var i = 9; i < 13; i++) {
     let myhour = currentHours;
 
-    if(myhour<9)
-    {
-        $(".textarea"+i).addClass("future");
-    }    
+    if (myhour < 9) {
 
-     if(myhour===i){
+        $(".textarea" + i).removeClass("past present future");
+        $(".textarea" + i).addClass("future");
+    }
+    else
+    if (myhour === i) {
+        $(".textarea" + i).removeClass("past present future");
 
-        $(".textarea"+i).addClass("present");
-      
-     }
-    else 
-    if(myhour>i){
+        $(".textarea" + i).addClass("present");
+    } else if (myhour > i) {
+        $(".textarea" + i).removeClass("past present future");
+
         $(".textarea" + i).addClass("past");
-      }
-      
-      for(var j=0; j <6; j++)
-      {
-          $(".textarea" + j).addClass("future");
-      }
+    }
+    else if(myhour <i){
+        $(".textarea" + i).removeClass("past present future");
+
+        $(".textarea" + i).addClass("future");
+    }
+
+    for (var j = 0; j < 6; j++) {
+     
+
+        $(".textarea" + j).addClass("future");
+    }
+  }
 }
+
+
+
+  
+        for(let i=0;i<9;i++)
+        {
+            if((localStorage.getItem("list"+i))!=null)
+            {
+              $("#textarea"+i).text(localStorage.getItem("list"+i));
+              $(".button" + i)
+              .children()
+              .addClass("bi-calendar-date-fill");
+                   
+                console.log(localStorage.getItem("list"+i));
+              
+            }
+            else
+            {
+              $(".button" + i)
+                .children()
+                .addClass("bi-calendar-check");
+            }
+
+           
+        }
+    
 }
+
 
 
 //click event
-
+let flag=false;
 for (let i = 0; i < 9; i++) {
   $(".button" + i).on("click", function (event) {
-   
-    $(".button" + i)
-      .children()
-      .removeClass("bi-calendar-check");
-    $(".button" + i)
-      .children()
-      .addClass("bi-calendar-date-fill");
-    $(".textarea" + i);
+    
+        if(jQuery.inArray($(".button" + i)
+        .children().attr("class")),"bi-calendar-check"){
+            console.log("wohooo");
+            saveCalender(this, i);
+
+    
+    }
+    else{
+        unsaveCalender(this,i);
+    }
+    
+  
+    
   });
 }
 
 
+
+function saveCalender(event, i) {
+
+
+    var data=$("#textarea"+i).val();
+    console.log(data);
+    if(data!=" "){
+        var savedData= localStorage.setItem("list"+i,data);
+    }
+    $(".button" + i)
+    .children()
+    .removeClass("bi-calendar-check");
+  $(".button" + i)
+    .children()
+    .addClass("bi-calendar-date-fill");
+  $(".textarea" + i);
+
+    
+ 
+  
+
+}
+
+
+/*  if(jQuery.inArray($(".button" + i)
+    .children().attr("class")),"bi-calendar-date-fill")
+    {
+        unsaveCalender(this,i);
+    }*/
+function unsaveCalender(event, i) {
+    var data=$("#textarea"+i).val();
+    console.log(data);
+    if(data!=""){
+        var savedData= localStorage.setItem("list"+i," ");
+    }
+    $(".button" + i)
+    .children()
+    .removeClass("bi-calendar-date-fill");
+  $(".button" + i)
+    .children()
+    .addClass("bi-calendar-check");
+  $(".textarea" + i);
+}
+init();
