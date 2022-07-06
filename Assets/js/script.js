@@ -99,18 +99,14 @@ if (currentHours > 12) {
             if((localStorage.getItem("list"+i))!=null)
             {
               $("#textarea"+i).text(localStorage.getItem("list"+i));
-              $(".button" + i)
-              .children()
-              .addClass("bi-calendar-date-fill");
-                   
-                console.log(localStorage.getItem("list"+i));
-              
-            }
-            else
-            {
+
               $(".button" + i)
                 .children()
-                .addClass("bi-calendar-check");
+                .removeClass("bi-calendar-check");
+              $(".button" + i)
+                .children()
+                .addClass("bi-calendar-date-fill");
+              console.log(localStorage.getItem("list"+i))
             }
 
            
