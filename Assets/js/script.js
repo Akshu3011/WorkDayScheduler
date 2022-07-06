@@ -132,6 +132,7 @@ function saveCalender(event, i) {
     var data = $("#textarea" + i).val();
     console.log(data);
     localStorage.removeItem("list" + i);
+    $("#textarea" + i).val(" ");
     $(".button" + i)
       .children()
       .removeClass("bi-calendar-date-fill");
@@ -139,7 +140,7 @@ function saveCalender(event, i) {
       .children()
       .addClass("bi-calendar-check");
 
-    $("#textarea" + i).text(" ");
+   
     flag=false;
   }
 }
