@@ -127,7 +127,7 @@ function saveCalender(event, i) {
       .addClass("bi-calendar-date-fill");
 
     $("#textarea" + i).text(localStorage.getItem("list" + i));
-    flag = false;
+    flag = true;
   } else {
     var data = $("#textarea" + i).val();
     console.log(data);
@@ -140,6 +140,7 @@ function saveCalender(event, i) {
       .addClass("bi-calendar-check");
 
     $("#textarea" + i).text(" ");
+    flag=false;
   }
 }
 
