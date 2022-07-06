@@ -107,18 +107,30 @@ function init() {
 //click event
 
 for (let i = 0; i < 9; i++) {
+  
   $(".button" + i).on("click", function (event) {
-   
-    saveCalender(this, i);
+    
+      saveCalender(this, i);
   });
+
 }
 
 function saveCalender(event, i) {
   if (!flag) {
     var data = $("#textarea" + i).val();
-    if (data != null) {
+    if (data != null || data !=" ") {
       var savedData = localStorage.setItem("list" + i, data);
     }
+    if ( data ===" " || data=== null)
+    {
+      return;
+    }
+    else{
+      $("#notification").text("Appointment saved to the calender...!!!");
+      setTimeout(() => { 
+      
+        $("#notification").text(" ");
+    }, 1000);
     $(".button" + i)
       .children()
       .removeClass("bi-calendar-check");
@@ -128,9 +140,18 @@ function saveCalender(event, i) {
 
     $("#textarea" + i).text(localStorage.getItem("list" + i));
     flag = true;
+  }
   } else {
     var data = $("#textarea" + i).val();
     console.log(data);
+    if ( data ===" " || data=== null)
+    {
+      return;
+    }
+    else
+    {
+
+    
     localStorage.removeItem("list" + i);
     $("#textarea" + i).val(" ");
     $(".button" + i)
@@ -142,6 +163,7 @@ function saveCalender(event, i) {
 
    
     flag=false;
+    }
   }
 }
 
